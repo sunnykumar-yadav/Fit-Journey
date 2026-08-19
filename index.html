@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitJourney | Your Health. Your Journey. Your Progress.</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Success Toast Notification -->
+    <div id="successToast" class="toast-notification" aria-live="polite">
+        <div class="toast-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="toast-content">
+            <h4>Success!</h4>
+            <p>Your personalized health report is ready.</p>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-person-running"></i> Fit<span>Journey</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#calculator" class="nav-link">Calculator</a></li>
+                <li><a href="#diet" class="nav-link">Diet Planner</a></li>
+                <li><a href="#workouts" class="nav-link">Workouts</a></li>
+                <li><a href="#tracker" class="nav-link">Log Daily</a></li>
+                <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+                <li><a href="#calculator" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">Calculate Now</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- 1. HERO SECTION -->
+        <section id="home" class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <span class="tagline"><i class="fas fa-bolt"></i> Smart Health Platform</span>
+                    <h1>Your Health. <span>Your Journey. Your Progress.</span></h1>
+                    <p>FitJourney is your long-term health companion. Calculate your BMI, BMR, daily calories, protein requirements, and water intake, set personalized goals, follow Indian diet & workout plans, and track your progress over time.</p>
+                    <div class="hero-buttons">
+                        <a href="#calculator" class="btn btn-primary"><i class="fas fa-calculator"></i> Calculate Now</a>
+                        <a href="#dashboard" class="btn btn-secondary"><i class="fas fa-chart-line"></i> View Dashboard</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <h3>100%</h3>
+                            <p>Scientific Formulas</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>20+</h3>
+                            <p>Indian Food items</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>4</h3>
+                            <p>Custom Goals</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-preview-card">
+                    <div class="preview-badge">Live Metric Preview</div>
+                    <div class="result-row" style="margin-top: 10px;">
+                        <label><i class="fas fa-weight-scale"></i> Body Mass Index (BMI)</label>
+                        <span class="value" style="color: #10b981;">22.5 Normal</span>
+                    </div>
+                    <div class="result-row">
+                        <label><i class="fas fa-fire"></i> Daily Calorie Target (TDEE)</label>
+                        <span class="value">1,950 kcal</span>
+                    </div>
+                    <div class="result-row">
+                        <label><i class="fas fa-drumstick-bite"></i> Recommended Protein</label>
+                        <span class="value">120g / day</span>
+                    </div>
+                    <div class="result-row">
+                        <label><i class="fas fa-glass-water"></i> Water Requirement</label>
+                        <span class="value">2.8 Liters</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. PERSONAL HEALTH CALCULATOR SECTION -->
+        <section id="calculator" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="tagline">Personalized Metrics</span>
+                    <h2>Personal Health Calculator</h2>
+                    <p>Enter your details below to calculate your BMI, BMR, daily calories, protein & hydration needs accurately.</p>
+                </div>
+
+                <div class="calc-grid">
+                    <!-- Form -->
+                    <div class="glass-card">
+                        <h3 style="margin-bottom: 20px;"><i class="fas fa-user-gear"></i> Enter Your Metrics</h3>
+                        <form id="healthCalculatorForm" novalidate>
+                            <div class="form-group" id="groupName">
+                                <label for="calcName">Full Name</label>
+                                <input type="text" id="calcName" class="input-field" placeholder="e.g. Rahul Sharma">
+                                <span class="error-msg" id="errName"><i class="fas fa-circle-exclamation"></i> Please enter your name.</span>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group" id="groupAge">
+                                    <label for="calcAge">Age (Years)</label>
+                                    <input type="number" id="calcAge" class="input-field" placeholder="10 - 120">
+                                    <span class="error-msg" id="errAge"><i class="fas fa-circle-exclamation"></i> Enter a valid age (10-120).</span>
+                                </div>
+                                <div class="form-group" id="groupGender">
+                                    <label for="calcGender">Gender</label>
+                                    <select id="calcGender" class="select-field">
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                    <span class="error-msg" id="errGender"><i class="fas fa-circle-exclamation"></i> Select gender.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group" id="groupHeight">
+                                    <label for="calcHeight">Height (cm)</label>
+                                    <input type="number" id="calcHeight" class="input-field" placeholder="80 - 250">
+                                    <span class="error-msg" id="errHeight"><i class="fas fa-circle-exclamation"></i> Enter height (80-250 cm).</span>
+                                </div>
+                                <div class="form-group" id="groupWeight">
+                                    <label for="calcWeight">Weight (kg)</label>
+                                    <input type="number" id="calcWeight" class="input-field" step="0.1" placeholder="25 - 300">
+                                    <span class="error-msg" id="errWeight"><i class="fas fa-circle-exclamation"></i> Enter weight (25-300 kg).</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="groupActivity">
+                                <label for="calcActivity">Daily Activity Level</label>
+                                <select id="calcActivity" class="select-field">
+                                    <option value="">Select Activity Level</option>
+                                    <option value="sedentary">Sedentary (Little or no exercise)</option>
+                                    <option value="light">Lightly Active (Exercise 1-3 days/week)</option>
+                                    <option value="moderate">Moderately Active (Exercise 3-5 days/week)</option>
+                                    <option value="active">Very Active (Exercise 6-7 days/week)</option>
+                                    <option value="extra_active">Extra Active (Intense work/sports)</option>
+                                </select>
+                                <span class="error-msg" id="errActivity"><i class="fas fa-circle-exclamation"></i> Select activity level.</span>
+                            </div>
+
+                            <div class="form-group" id="groupGoal">
+                                <label for="calcGoal">Primary Fitness Goal</label>
+                                <select id="calcGoal" class="select-field">
+                                    <option value="">Select Fitness Goal</option>
+                                    <option value="weight_loss">Weight Loss (Calorie Deficit)</option>
+                                    <option value="weight_maintenance">Weight Maintenance</option>
+                                    <option value="weight_gain">Weight Gain / Muscle Building</option>
+                                    <option value="general">General Fitness & Health</option>
+                                </select>
+                                <span class="error-msg" id="errGoal"><i class="fas fa-circle-exclamation"></i> Select fitness goal.</span>
+                            </div>
+
+                            <button type="submit" id="btnCalculate" class="btn btn-primary btn-full"><i class="fas fa-calculator"></i> Calculate Health Targets</button>
+                        </form>
+                    </div>
+
+                    <!-- Output Card -->
+                    <div class="glass-card" id="calcResultsCard">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap;">
+                            <div>
+                                <h3 style="margin-bottom: 4px;"><i class="fas fa-id-card"></i> Personal Health Report</h3>
+                                <p style="font-size: 1rem; color: var(--primary); font-weight: 700;" id="resUserName">Name: User</p>
+                            </div>
+                            <span class="badge" id="resGoalBadge" style="background: var(--secondary); font-size: 0.85rem; padding: 6px 12px;">Weight Loss</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;" id="resGoalSummary">Calculated for Weight Loss</p>
+
+                        <div class="calc-results-list">
+                            <div class="result-row">
+                                <label>Body Mass Index (BMI)</label>
+                                <div>
+                                    <span class="value" id="resBmiValue">--</span>
+                                    <span class="badge" id="resBmiCategory" style="background:#10b981;">Normal</span>
+                                </div>
+                            </div>
+                            <div class="result-row">
+                                <label>Basal Metabolic Rate (BMR)</label>
+                                <span class="value" id="resBmrValue">-- kcal</span>
+                            </div>
+                            <div class="result-row">
+                                <label>Maintenance Calories (TDEE)</label>
+                                <span class="value" id="resTdeeValue">-- kcal</span>
+                            </div>
+                            <div class="result-row" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);">
+                                <label style="color: #fff; font-weight: 600;">Recommended Calorie Target</label>
+                                <span class="value" id="resTargetCalValue" style="font-size: 1.3rem;">-- kcal</span>
+                            </div>
+                            <div class="result-row">
+                                <label>Recommended Daily Protein</label>
+                                <span class="value" id="resProteinValue">-- g/day</span>
+                            </div>
+                            <div class="result-row">
+                                <label>Estimated Daily Water Intake</label>
+                                <span class="value" id="resWaterValue">-- L/day</span>
+                            </div>
+                        </div>
+
+                        <!-- 7. Personalized Plan Section -->
+                        <div class="personalized-plan-box">
+                            <h4 style="margin-bottom: 14px; color: var(--primary);"><i class="fas fa-clipboard-list"></i> Your Personalized Plan</h4>
+                            <div class="plan-item" id="planCalorieAdvice">
+                                <strong><i class="fas fa-bullseye"></i> Calorie Strategy:</strong> Consuming -- kcal/day for your target goal.
+                            </div>
+                            <div class="plan-item" id="planMacroAdvice">
+                                <strong><i class="fas fa-drumstick-bite"></i> Protein & Water:</strong> Aim for -- g protein and -- L of water daily.
+                            </div>
+                            <div class="plan-item" id="planWorkoutAdvice">
+                                <strong><i class="fas fa-dumbbell"></i> Suggested Workout:</strong> HIIT & Resistance Training 4 days/week.
+                            </div>
+                            <div class="plan-item" id="planDietAdvice">
+                                <strong><i class="fas fa-utensils"></i> Diet Suggestions:</strong> Roti, Moong Dal, Paneer/Chicken, Eggs & Salads.
+                            </div>
+                        </div>
+
+                        <!-- 8. Action Buttons -->
+                        <div class="results-actions">
+                            <button id="btnRecalculate" class="btn btn-secondary"><i class="fas fa-rotate-right"></i> Calculate Again</button>
+                            <button id="btnSaveProgress" class="btn btn-primary"><i class="fas fa-floppy-disk"></i> Save My Progress</button>
+                            <a href="#dashboard" id="btnGoDashboard" class="btn btn-secondary"><i class="fas fa-chart-line"></i> View My Dashboard</a>
+                        </div>
+
+                        <div style="margin-top: 20px; font-size: 0.8rem; color: var(--text-dim); text-align: center;">
+                            <i class="fas fa-shield-halved"></i> Calculations powered by standard Mifflin-St Jeor & WHO equations.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. DIET PLANNER SECTION -->
+        <section id="diet" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="tagline">Indian Nutrition Guide</span>
+                    <h2>Personalized Diet Planner</h2>
+                    <p>Goal-focused meal plans featuring authentic Indian staple foods with calories and protein values.</p>
+                </div>
+
+                <div class="diet-controls">
+                    <div class="tab-group">
+                        <button class="tab-btn diet-goal-btn active" data-goal="weight_loss">Weight Loss</button>
+                        <button class="tab-btn diet-goal-btn" data-goal="weight_gain">Weight Gain</button>
+                        <button class="tab-btn diet-goal-btn" data-goal="maintenance">Maintenance</button>
+                        <button class="tab-btn diet-goal-btn" data-goal="general">General Health</button>
+                    </div>
+
+                    <div style="max-width: 250px; width: 100%;">
+                        <input type="text" id="foodSearchInput" class="input-field" placeholder="🔍 Search Roti, Paneer, Eggs...">
+                    </div>
+                </div>
+
+                <div class="diet-grid">
+                    <!-- Daily Schedule Plan -->
+                    <div class="glass-card">
+                        <h3 id="dietPlanTitle" style="margin-bottom: 6px;">Fat Loss Meal Plan</h3>
+                        <p id="dietPlanDesc" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">High-protein, moderate-carb plan.</p>
+                        
+                        <div class="meal-cards-container" id="dietMealCardsContainer">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Indian Food Nutrition Database -->
+                    <div class="glass-card">
+                        <h3 style="margin-bottom: 16px;"><i class="fas fa-utensils"></i> Indian Food Calorie & Protein Database</h3>
+                        <div class="table-responsive">
+                            <table class="food-table">
+                                <thead>
+                                    <tr>
+                                        <th>Food Item</th>
+                                        <th>Portion</th>
+                                        <th>Calories</th>
+                                        <th>Protein</th>
+                                        <th>Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="indianFoodTableBody">
+                                    <!-- Injected via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. WORKOUT SECTION -->
+        <section id="workouts" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="tagline">Exercise Plans</span>
+                    <h2>Workout Routines</h2>
+                    <p>Beginner and intermediate fitness plans optimized for home or gym training.</p>
+                </div>
+
+                <div class="workout-tab-bar">
+                    <button class="tab-btn workout-tab-btn active" data-plan="weight_loss"><i class="fas fa-fire"></i> Weight Loss</button>
+                    <button class="tab-btn workout-tab-btn" data-plan="muscle_building"><i class="fas fa-dumbbell"></i> Muscle Building</button>
+                    <button class="tab-btn workout-tab-btn" data-plan="general"><i class="fas fa-heart-pulse"></i> General Fitness</button>
+                    <button class="tab-btn workout-tab-btn" data-plan="home_workout"><i class="fas fa-house"></i> Home Workout</button>
+                </div>
+
+                <div class="glass-card" style="margin-bottom: 30px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                        <div>
+                            <h3 id="workoutPlanTitle">Fat Loss & HIIT Routine</h3>
+                            <span id="workoutPlanFreq" style="color: var(--text-muted); font-size: 0.85rem;">Schedule: 4-5 Days / Week</span>
+                        </div>
+                        <span class="badge" id="workoutPlanTag" style="background: var(--secondary);">High Calorie Burn</span>
+                    </div>
+
+                    <div class="exercise-list" id="workoutListContainer">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. PROGRESS TRACKER & LOGGING -->
+        <section id="tracker" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="tagline">Daily Tracking</span>
+                    <h2>Track Your Daily Health Logs</h2>
+                    <p>Record your weight, nutrition, water intake, and workout duration to update your Health Score.</p>
+                </div>
+
+                <div class="glass-card">
+                    <form id="dailyTrackerForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="logWeight">Today's Weight (kg)</label>
+                                <input type="number" step="0.1" id="logWeight" class="input-field" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="logCalories">Calories Consumed (kcal)</label>
+                                <input type="number" id="logCalories" class="input-field" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="logProtein">Protein Consumed (g)</label>
+                                <input type="number" id="logProtein" class="input-field" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="logWater">Water Drank (Liters)</label>
+                                <input type="number" step="0.1" id="logWater" class="input-field" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="logSteps">Steps Walked</label>
+                                <input type="number" id="logSteps" class="input-field" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="logWorkout">Workout Minutes</label>
+                                <input type="number" id="logWorkout" class="input-field" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="logSleep">Sleep Duration (Hours)</label>
+                                <input type="number" step="0.5" id="logSleep" class="input-field" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Log & Update Health Score</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. DAILY HEALTH DASHBOARD -->
+        <section id="dashboard" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="tagline">Analytics Hub</span>
+                    <h2>Daily Health Dashboard</h2>
+                    <p>Live progress score, macro balance, and weekly fitness trends.</p>
+                </div>
+
+                <!-- Score Card Banner -->
+                <div class="dash-score-card">
+                    <div class="score-text">
+                        <h3>Today's Overall Health Score</h3>
+                        <p id="healthScoreMsg">Calculating your performance metrics...</p>
+                    </div>
+                    <div class="score-big" id="healthScoreValue">82/100</div>
+                </div>
+
+                <!-- Quick Metric Cards -->
+                <div class="dash-metrics-grid">
+                    <div class="metric-card">
+                        <div class="icon-box"><i class="fas fa-weight-scale"></i></div>
+                        <h4>BMI Score</h4>
+                        <div class="value-num" id="dashBmi">22.5</div>
+                        <span id="dashBmiCat" style="font-size: 0.75rem; color: var(--primary);">Normal</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="icon-box"><i class="fas fa-bolt"></i></div>
+                        <h4>BMR Energy</h4>
+                        <div class="value-num" id="dashBmr">1650 kcal</div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Basal Requirement</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="icon-box"><i class="fas fa-fire"></i></div>
+                        <h4>Calories</h4>
+                        <div class="value-num" id="dashCalories">1800 / 1950</div>
+                        <div class="progress-track"><div class="progress-fill" id="dashCalBar" style="width: 80%;"></div></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="icon-box"><i class="fas fa-drumstick-bite"></i></div>
+                        <h4>Protein</h4>
+                        <div class="value-num" id="dashProtein">110g / 120g</div>
+                        <div class="progress-track"><div class="progress-fill" id="dashProtBar" style="width: 90%;"></div></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="icon-box"><i class="fas fa-droplet"></i></div>
+                        <h4>Water</h4>
+                        <div class="value-num" id="dashWater">2.5L / 2.8L</div>
+                        <div class="progress-track"><div class="progress-fill" id="dashWaterBar" style="width: 85%;"></div></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="icon-box"><i class="fas fa-bullseye"></i></div>
+                        <h4>Goal Target</h4>
+                        <div class="value-num" id="dashGoal" style="font-size: 1.1rem; color: var(--secondary);">Weight Loss</div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Active Program</span>
+                    </div>
+                </div>
+
+                <!-- Interactive Charts Grid -->
+                <div class="charts-grid">
+                    <div class="glass-card">
+                        <h4 style="margin-bottom: 16px;"><i class="fas fa-chart-pie"></i> Daily Macro & Calorie Intake</h4>
+                        <div class="chart-box">
+                            <canvas id="macroChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <h4 style="margin-bottom: 16px;"><i class="fas fa-chart-line"></i> 7-Day Weight & Activity Trends</h4>
+                        <div class="chart-box">
+                            <canvas id="weeklyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Required Medical Disclaimer -->
+                <div class="disclaimer-banner">
+                    <i class="fas fa-circle-exclamation"></i> <strong>Disclaimer:</strong> These calculations are estimates based on standard body formulas and are not a substitute for professional medical advice or personalized clinical nutrition counselling.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="logo" style="justify-content: center; margin-bottom: 12px;">
+                <i class="fas fa-person-running"></i> Fit<span>Journey</span>
+            </div>
+            <p>Your Health. Your Journey. Your Progress.</p>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#calculator">Calculator</a>
+                <a href="#diet">Diet Planner</a>
+                <a href="#workouts">Workouts</a>
+                <a href="#dashboard">Dashboard</a>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">© 2026 FitJourney Inc. All rights reserved. Long-Term Health Improvement Platform.</p>
+        </div>
+    </footer>
+
+    <!-- Modular Application Scripts -->
+    <script src="js/calculator.js"></script>
+    <script src="js/dietData.js"></script>
+    <script src="js/workouts.js"></script>
+    <script src="js/tracker.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
